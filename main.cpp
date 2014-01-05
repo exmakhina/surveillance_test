@@ -26,11 +26,12 @@ int main()
 
 		if (reader.parse(advertisment, message)) {
 			if (message.isMember("DeviceName"))
-				cout << "Device name: " << message["DeviceName"].toStyledString() << "\n";
+				cout << "Device name: " << message["DeviceName"].toStyledString();
 			if (message.isMember("ListenerIP") && message.isMember("ListenerPort")) {
-				Json::Value listenerIP(message["ListenerIP"]);
+				/* Try to connect to any IP provided by the camera */
+				Json::Value listenerIP(message["ListenerIP"]);		// extract the IP list from the advertisment message
 				for (int i=0; listenerIP.isMember(to_string(i)); i++) {
-					TcpSocket tcpSocket;
+					TcpSocket tcpSocket;		// create a socket
 					string IP = listenerIP[to_string(i)].asString();
 					int port = message["ListenerPort"].asInt();
 
@@ -41,7 +42,7 @@ int main()
 					}
 					catch (SocketException& e) {
 						cout << e.description();
-						continue;
+						continue;		// if connection fails, try the next IP
 					}
 
 					cout << "Connected to " << IP << "Port: " << port << "\n";
