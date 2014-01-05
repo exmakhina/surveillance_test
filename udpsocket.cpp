@@ -34,7 +34,6 @@ UdpSocket::~UdpSocket()
 
 const UdpSocket& UdpSocket::operator >> (string& message) const
 {
-	int sent;
 	char buf[1024];
 	int size;
 
