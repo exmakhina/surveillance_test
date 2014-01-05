@@ -2,6 +2,7 @@
 #include <string>
 #include <jsoncpp/json.h>
 #include "udpsocket.h"
+#include "tcpsocket.h"
 #include "socketexception.h"
 
 using namespace std;
@@ -29,7 +30,21 @@ int main()
 			if (message.isMember("ListenerIP") && message.isMember("ListenerPort")) {
 				Json::Value listenerIP(message["ListenerIP"]);
 				for (int i=0; listenerIP.isMember(to_string(i)); i++) {
-					cout << "IP address " << i << ": " << listenerIP[to_string(i)] << "Port: " << message["ListenerPort"] << "\n";
+					TcpSocket tcpSocket;
+					string IP = listenerIP[to_string(i)].asString();
+					int port = message["ListenerPort"].asInt();
+
+					cout << "Try to connect to  " << IP << ":" << port << "\n";
+
+					try {
+						tcpSocket.connect(IP, port);
+					}
+					catch (SocketException& e) {
+						cout << e.description();
+						continue;
+					}
+
+					cout << "Connected to " << IP << "Port: " << port << "\n";
 				}
 			}
 		}
