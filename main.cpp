@@ -14,6 +14,7 @@ int main()
 	bool error = false;
 	Json::Reader reader;
 	Json::Value message;
+	string response;
 
 	while (!error) {
 		try {
@@ -46,6 +47,24 @@ int main()
 					}
 
 					cout << "Connected to " << IP << "Port: " << port << "\n";
+					while (!error) {
+						try {
+							tcpSocket << "Prout Caca Boudin\n";
+						}
+						catch (SocketException& e) {
+							cout << e.description();
+							error = true;
+							continue;
+						}
+
+						try {
+							tcpSocket >> response;
+						}
+						catch (SocketException& e) {
+							cout << e.description();
+							error = true;
+						}
+					}
 				}
 			}
 		}
