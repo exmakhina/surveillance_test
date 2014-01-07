@@ -65,6 +65,8 @@ int main()
 							error = true;
 						}
 					}
+
+					tcpSocket.close();
 				}
 			}
 		}
