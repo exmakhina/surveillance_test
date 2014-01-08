@@ -52,7 +52,6 @@ int main()
 						request["Request"]["Command"] = 0;
 						request["Request"]["Value"] = 0;
 						requestString = request.toStyledString();
-						cout << "Ready to send the request: " << requestString << "\n";
 						try {
 							tcpSocket << requestString;
 						}
@@ -68,8 +67,14 @@ int main()
 						catch (SocketException& e) {
 							cout << e.description();
 							error = true;
+							continue;
 						}
-						cout << "received response: " << responseString << "\n";
+						if (reader.parse(responseString, response)) {
+							if (response["Response"]["Status"].asString().compare("ok") == 0)
+								cout << "Status: OK\n";
+							else
+								cout << "Status: ERROR\n";
+						}
 					}
 
 					tcpSocket.close();
