@@ -14,7 +14,8 @@ int main()
 	bool error = false;
 	Json::Reader reader;
 	Json::Value message;
-	string response;
+	Json::Value request, response;
+	string requestString, responseString;
 
 	while (!error) {
 		try {
@@ -46,10 +47,14 @@ int main()
 						continue;		// if connection fails, try the next IP
 					}
 
-					cout << "Connected to " << IP << "Port: " << port << "\n";
+					cout << "Connected to " << IP << ":" << port << "\n";
 					while (!error) {
+						request["Request"]["Command"] = 0;
+						request["Request"]["Value"] = 0;
+						requestString = request.toStyledString();
+						cout << "Ready to send the request: " << requestString << "\n";
 						try {
-							tcpSocket << "Prout Caca Boudin\n";
+							tcpSocket << requestString;
 						}
 						catch (SocketException& e) {
 							cout << e.description();
@@ -58,12 +63,13 @@ int main()
 						}
 
 						try {
-							tcpSocket >> response;
+							tcpSocket >> responseString;
 						}
 						catch (SocketException& e) {
 							cout << e.description();
 							error = true;
 						}
+						cout << "received response: " << responseString << "\n";
 					}
 
 					tcpSocket.close();
