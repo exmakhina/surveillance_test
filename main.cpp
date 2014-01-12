@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
 
 	if (argc < 2) {
 		cout << "Usage:\n";
-		cout << "surveillance_test start|stop\n";
+		cout << "surveillance_test start|stop|kill\n";
 	} else	{
 		/* Check the input parameter and create the request */
 		request["Request"]["Sender"] = "host";
@@ -29,6 +29,9 @@ int main(int argc, char* argv[])
 			request["Request"]["Value"] = 0;
 		} else if (command.compare("stop") == 0) {
 			request["Request"]["Command"] = 1;
+			request["Request"]["Value"] = 0;
+		} else if (command.compare("kill") == 0) {
+			request["Request"]["Command"] = 2;
 			request["Request"]["Value"] = 0;
 		} else {
 			cout << "Usage:\n";
