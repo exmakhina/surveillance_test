@@ -13,6 +13,7 @@ public:
 	~UdpSocket();
 
 	const UdpSocket& operator >> (std::string&) const;
+	void close();
 
 private:
 	int sockHandle;

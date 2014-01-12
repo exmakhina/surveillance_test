@@ -49,3 +49,9 @@ const UdpSocket& UdpSocket::operator >> (string& message) const
 
 	return *this;
 }
+
+void UdpSocket::close()
+{
+	if (sockHandle >= 0)
+		::close(sockHandle);
+}
