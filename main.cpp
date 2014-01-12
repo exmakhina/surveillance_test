@@ -102,7 +102,6 @@ int main(int argc, char* argv[])
 
 					/* Close the socket */
 					tcpSocket.close();
-					cout << "Socket closed.\n";
 				}	/* for (int i=0; listenerIP.isMember(to_string(i)); i++) */
 			}
 		}
