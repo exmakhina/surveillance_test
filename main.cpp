@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 			request["Request"]["Value"] = 0;
 		} else {
 			cout << "Usage:\n";
-			cout << "surveillance_test start|stop\n";
+			cout << "surveillance_test start|stop|kill\n";
 			return -1;
 		}
 		requestString = request.toStyledString();
