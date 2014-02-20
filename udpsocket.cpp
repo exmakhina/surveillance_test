@@ -29,7 +29,7 @@ UdpSocket::UdpSocket()
 UdpSocket::~UdpSocket()
 {
 	if (sockHandle >= 0)
-		::close(sockHandle);
+		::shutdown(sockHandle, SHUT_RDWR);
 }
 
 const UdpSocket& UdpSocket::operator >> (string& message) const
@@ -53,5 +53,5 @@ const UdpSocket& UdpSocket::operator >> (string& message) const
 void UdpSocket::close()
 {
 	if (sockHandle >= 0)
-		::close(sockHandle);
+		::shutdown(sockHandle, SHUT_RDWR);
 }
